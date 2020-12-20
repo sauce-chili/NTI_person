@@ -12,8 +12,6 @@ model = "MobileNetSSD_deploy.caffemodel"
 net = cv2.dnn.readNetFromCaffe(protxt, model)
 
 
-# open webcam video stream
-
 #################################################################
 
 
@@ -32,12 +30,9 @@ def detector(rgb_image):
     blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)),
                                  0.007843, (300, 300), 127.5)
 
-    # pass the blob through the network and obtain the detections and
-    # predictions
     net.setInput(blob)
     detections = net.forward()
     rects = []
-    # loop over the detections
     for i in np.arange(0, detections.shape[2]):
         confidence = detections[0, 0, i, 2]
         if confidence > 0.32:
